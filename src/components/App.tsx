@@ -3,7 +3,7 @@ import React from 'react'
 const App = (): JSX.Element => {
     return (
         <div className="app">
-            Hello Hahahaha
+            Hello
         </div>
     )
 }
