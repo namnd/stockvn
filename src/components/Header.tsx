@@ -1,11 +1,11 @@
 import React from 'react'
 
-const App = (): JSX.Element => {
+const Header = (): JSX.Element => {
     return (
         <div className="app">
-            Hello
+            This is header
         </div>
     )
 }
 
-export default App
+export default Header
