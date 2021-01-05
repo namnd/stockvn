@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
-import {getSectors} from '../services/sector'
+import {getSectors, Sector} from '../services/sector'
 
 const SearchInput = (): JSX.Element => {
-    const [options, setOptions] = useState([{}])
+    const [options, setOptions] = useState<Sector[]>([])
     // const [selectedOption, setSeletedOption] = useState({})
 
     useEffect(() => {
-        getSectors().then(result => {
+        async function fetchData() {
+            const result = await getSectors()
             setOptions(result)
-        })
+        }
+        fetchData()
     }, [])
 
     return (
