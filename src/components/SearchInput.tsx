@@ -1,49 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { ApolloClient, gql, InMemoryCache} from '@apollo/client'
 import Select from 'react-select'
-
-const client = new ApolloClient({
-    uri: 'http://localhost:8080/query',
-    cache: new InMemoryCache()
-})
-
-type Sector = {
-    id: string
-    children: Sector[]
-}
+import {getSectors} from '../services/sector'
 
 const SearchInput = (): JSX.Element => {
     const [options, setOptions] = useState([{}])
     // const [selectedOption, setSeletedOption] = useState({})
 
     useEffect(() => {
-        client.query({
-            query: gql`
-            query GetSectors {
-                sectors {
-                    id
-                    label
-                    children {
-                        id
-                        label
-                    }
-                }
-            }
-            `
-        }).then(result => {
-            const sectors = result.data.sectors.map((s: Sector) => {
-                return {
-                    ...s,
-                    value: s.id,
-                    options: s.children.map((c: Sector) => {
-                        return {
-                            ...c,
-                            value: s.id,
-                        }
-                    }),
-                }
-            })
-            setOptions(sectors)
+        getSectors().then(result => {
+            setOptions(result)
         })
     }, [])
 
