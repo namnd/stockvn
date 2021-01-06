@@ -1,36 +1,27 @@
-import {gql} from '@apollo/client'
+import { gql } from '@apollo/client'
+import { EXCHANGE } from '../store/slices/stockScreenerSlice'
 import graphqlClient from './graph'
 
-export type Sector = {
-    id: string
-    children: Sector[]
+export interface Sector {
+  id: string
+  label: string
+  exchange: string
 }
 
-export const getSectors = async (): Promise<Sector[]> => {
+export const getSectors = async (exchange: EXCHANGE): Promise<Sector[]> => {
     const result = await graphqlClient.query({
         query: gql`
-        query GetSectors {
-            sectors {
-                id
-                label
-                children {
-                    id
-                    label
-                }
-            }
+        query ($exchange: String) {
+          sectors (exchange: $exchange) {
+            id
+            label
+            exchange
+          }
         }
-        `
-    })
-    return result.data.sectors.map((s: Sector) => {
-        return {
-            ...s,
-            value: s.id,
-            options: s.children.map((c: Sector) => {
-                return {
-                    ...c,
-                    value: s.id,
-                }
-            }),
+      `,
+        variables: {
+            exchange
         }
     })
+    return result.data.sectors
 }

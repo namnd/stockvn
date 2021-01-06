@@ -6,19 +6,19 @@ export type Company = {
     code: string
     name: string
     exchange: string
-    sector?: string
     sectorId?: string
     marketValue?: number
 }
 
 type CompanySearchParams = {
     exchange: EXCHANGE
+    sectorIds?: string[]
 }
 
 export const getCompanies = async (searchParams: CompanySearchParams): Promise<Company[]> => {
     const result = await graphqlClient.query({
         query: gql`
-        query companies($searchParams: CompanySearchParams) {
+        query ($searchParams: CompanySearchParams) {
             companies (searchParams: $searchParams) {
                 code
                 name
