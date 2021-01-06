@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 export enum EXCHANGE {
     ALL = 'all',
@@ -17,7 +17,14 @@ const stockScreenerSlice = createSlice({
     name: 'search',
     initialState,
     reducers: {
+        updateExchange(
+            state,
+            action: PayloadAction<EXCHANGE>) {
+            state.exchange = action.payload
+        }
     }
 })
+
+export const { updateExchange } = stockScreenerSlice.actions
 
 export default stockScreenerSlice.reducer
