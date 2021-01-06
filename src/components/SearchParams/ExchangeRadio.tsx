@@ -1,8 +1,5 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
-import { store } from '../../store'
-import {getExchange} from '../../store/selectors/stockScreenerSelector'
-import {EXCHANGE, updateExchange} from '../../store/slices/stockScreenerSlice'
+import {EXCHANGE} from '../../store/slices/stockScreenerSlice'
 
 type RadioOption = {
     key: EXCHANGE
@@ -13,13 +10,11 @@ const radioOptions: RadioOption[] = [
     {key: EXCHANGE.HNX, label: 'HNX'},
     {key: EXCHANGE.HSX, label: 'HSX'},
 ]
-const Exchange = (): JSX.Element => {
-    const exchange = useSelector(getExchange)
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        store.dispatch(
-            updateExchange(e.target.value as EXCHANGE)
-        )
-    }
+type ExchangeRadioProps = {
+    exchange: EXCHANGE
+    onSelect: (value: EXCHANGE) => void
+}
+const ExchangeRadio = (props: ExchangeRadioProps): JSX.Element => {
     return (
         <div>
             {radioOptions.map((option: RadioOption) => (
@@ -30,8 +25,8 @@ const Exchange = (): JSX.Element => {
                         id={option.key}
                         name="exchange"
                         value={option.key}
-                        checked={option.key == exchange}
-                        onChange={handleChange}
+                        checked={option.key == props.exchange}
+                        onChange={(e) => props.onSelect(e.target.value as EXCHANGE)}
                     />
                     <label className="form-check-label" htmlFor={option.key}>
                         {option.label}
@@ -42,4 +37,4 @@ const Exchange = (): JSX.Element => {
     )
 }
 
-export default Exchange
+export default ExchangeRadio

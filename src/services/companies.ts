@@ -1,4 +1,5 @@
 import {gql} from '@apollo/client'
+import { EXCHANGE } from '../store/slices/stockScreenerSlice'
 import graphqlClient from './graph'
 
 export type Company = {
@@ -10,11 +11,15 @@ export type Company = {
     marketValue?: number
 }
 
-export const getCompanies = async (): Promise<Company[]> => {
+type CompanySearchParams = {
+    exchange: EXCHANGE
+}
+
+export const getCompanies = async (searchParams: CompanySearchParams): Promise<Company[]> => {
     const result = await graphqlClient.query({
         query: gql`
-        query {
-            companies {
+        query companies($searchParams: CompanySearchParams) {
+            companies (searchParams: $searchParams) {
                 code
                 name
                 exchange
@@ -22,7 +27,10 @@ export const getCompanies = async (): Promise<Company[]> => {
                 sectorId
             }
         }
-        `
+        `,
+        variables: {
+            searchParams
+        }
     })
     return result.data.companies
 }

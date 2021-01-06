@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react'
 import { getCompanies, Company} from '../services/companies'
+import { EXCHANGE } from '../store/slices/stockScreenerSlice'
 
-const CompaniesList = (): JSX.Element => {
+type CompaniesListProps = {
+    exchange: EXCHANGE
+}
+const CompaniesList = (props: CompaniesListProps): JSX.Element => {
     const [companies, setCompanies] = useState<Company[]>([])
 
     useEffect(() => {
-        getCompanies().then(result => {
+        getCompanies({exchange: props.exchange}).then(result => {
             setCompanies(result)
         })
-    }, [])
+    }, [props.exchange])
 
     return (
         <table className="table">
