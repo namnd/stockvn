@@ -3,8 +3,8 @@ import {Sector} from '../../services/sector'
 
 export enum EXCHANGE {
     ALL = 'all',
-    HNX = 'hnx',
-    HSX = 'hsx',
+    HNX = 'HNX',
+    HSX = 'HSX',
 }
 export interface StockScreenerState {
     exchange: EXCHANGE

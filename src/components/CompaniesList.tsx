@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import { getCompanies, Company} from '../services/companies'
+import {Link} from 'react-router-dom'
+import { getCompanies, Company} from '../services/company'
 import { EXCHANGE } from '../store/slices/stockScreenerSlice'
 
 type CompaniesListProps = {
@@ -26,8 +27,8 @@ const CompaniesList = (props: CompaniesListProps): JSX.Element => {
             </thead>
             <tbody>
                 {companies.map((company: Company) => (
-                    <tr key={`${company.code}-${company.exchange}`}>
-                        <td>{company.code}</td>
+                    <tr key={`${company.code}.${company.exchange}`}>
+                        <td><Link to={`/stock/${company.code}.${company.exchange}`}>{company.code}</Link></td>
                         <td>{company.name}</td>
                         <td></td>
                     </tr>
