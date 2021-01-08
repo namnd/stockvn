@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import { getCompanies, Company} from '../services/company'
 import { EXCHANGE } from '../store/slices/stockScreenerSlice'
+import {getCompanyPath} from '../util/company'
 
 type CompaniesListProps = {
     exchange: EXCHANGE
@@ -28,7 +29,7 @@ const CompaniesList = (props: CompaniesListProps): JSX.Element => {
             <tbody>
                 {companies.map((company: Company) => (
                     <tr key={`${company.code}.${company.exchange}`}>
-                        <td><Link to={`/stock/${company.code}.${company.exchange}`}>{company.code}</Link></td>
+                        <td><Link to={getCompanyPath(company)}>{company.code}</Link></td>
                         <td>{company.name}</td>
                         <td></td>
                     </tr>

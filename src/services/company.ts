@@ -35,10 +35,9 @@ export const getCompanies = async (searchParams: CompanySearchParams): Promise<C
 }
 
 export const getCompany = async(exchange: string, code: string): Promise<Company> => {
-    console.log(exchange, code)
     const result = await graphqlClient.query({
         query: gql`
-        query ($exchange: String, $code: String) {
+        query ($exchange: String!, $code: String!) {
             company(exchange: $exchange, code: $code) {
                 code
                 name

@@ -1,8 +1,8 @@
 import classNames from 'classnames'
 import React from 'react'
 import {Link, useHistory} from 'react-router-dom'
-import {Company} from '../services/company'
-import {getCompanyPath, isActivePath} from '../util/company'
+import {Company} from '../../services/company'
+import {getCompanyPath, isActivePath} from '../../util/company'
 
 type StockNavigationProps = {
     company: Company
